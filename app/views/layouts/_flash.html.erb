@@ -1,0 +1,6 @@
+<% flash.each do |type,msg| %>
+  <div class="alert alert-<%= type %> col-xs-10 col-xs-offset-1">
+    <%= msg %>
+    <a href="#" data-dismiss="alert" class="float-right"><i class="fa fa-times"></i></a>
+  </div>
+<% end %>

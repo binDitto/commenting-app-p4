@@ -9,7 +9,10 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, length: { maximum: 105 },
             format: { with: val_email_reg }
 
-  val_pass_reg = /^[a-zA-Z]\w{7,24}$/g
+  val_pass_reg = /\A(?=.*[a-zA-Z])(?=.*[0-9]).{6,}\z/
+                #  | Looks for an arbitrary string followed by a letter
+                              #  | Looks for an arbitrary string followed by a number.
+                                          # | Ensure there are at least 6 characters
 
   validates :password, presence: true, length: { minimum: 8, maximum: 25 },
             format: { with: val_pass_reg }

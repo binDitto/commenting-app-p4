@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[PROJECT_04] Post app with commenting and users system < all self made
 
-Things you may want to cover:
+Models
+- User
+  * username
+  * email
+  * password_digest
+  * has_many :comments
+  * has_many :posts
 
-* Ruby version
+- Post
+  * title
+  * body
+  * belongs_to :user
+  * has_many :comments
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Comment
+  * body
+  * belongs_to :user
+  * belongs_to :post
