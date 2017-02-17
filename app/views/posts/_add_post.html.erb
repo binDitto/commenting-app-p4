@@ -1,0 +1,71 @@
+<div class="above">
+  <div class="container-table">
+
+    <div class="row vertical-center-row">
+
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+
+        <div class="panel panel-default">
+
+
+          <div class="panel-heading">
+            <div class="pull-right thefa">
+              <a href="#">
+              <i class="fa fa-times fa-2x"></i>
+              </a>
+            </div>
+
+
+              <h1 align="center">Add a post</h1>
+
+
+          </div>
+
+          <%= form_for([current_user, Post.new], html: { class: "form-horizontal"}) do |p| %>
+
+          <div class="panel-body">
+            <div class="form-group">
+              <%= p.label :title, class: "col-xs-12 col-sm-2 control-label" %>
+              <div class="col-xs-12 col-sm-10">
+                <%= p.text_field :title, class: "form-control", placeholder: "Enter a title" %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= p.label :link, class: "col-xs-12 col-sm-2 control-label" %>
+              <div class="col-xs-12 col-sm-10">
+                <%= p.text_field :link, class: "form-control", placeholder: "Paste link url here" %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= p.label :img_url, "Thumbnail", class: "col-xs-12 col-sm-2 control-label" %>
+              <div class="col-xs-12 col-sm-10">
+                <%= p.text_field :img_url, class: "form-control", placeholder: "Paste image url here" %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= p.label :body, class: "col-xs-12 col-sm-2 control-label "%>
+              <div class="col-xs-12 col-sm-10 ">
+                <%= p.text_area :body, rows: "5", class: "form-control", placeholder: "Enter description" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <div class="form-group">
+              <div class="col-xs-12 col-sm-10 col-sm-offset-2">
+                <%= p.submit "Post", class: "btn btn-success" %>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

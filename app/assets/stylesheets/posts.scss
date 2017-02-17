@@ -1,0 +1,44 @@
+// Place all the styles related to the Posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.btn-group-vertical form{
+  float:left;
+  display: inline;// no needed as pointed by Aziz
+}
+
+.btn-group-vertical form .btn-top{
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom: 0;
+}
+
+.btn-group-vertical form .btn-bot{
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top: 0;
+}
+
+.above {
+  display: none;
+  background: rgba(0,0,0, 0.9);
+  z-index: 999;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+}
+
+.container-table {
+   height: 100%;
+   width: 100%;
+   display: table;
+}
+.vertical-center-row {
+   display: table-cell;
+   vertical-align: middle;
+}
+
+.thefa {
+  margin: 20px;
+}

@@ -1,0 +1,87 @@
+
+
+<div class="container">
+  <div class="row">
+
+    <a href="#" class="btn btn-success btn-lg above-toggle">Add Post  <i class="fa fa-plus"></i></a>
+
+
+
+    <hr>
+
+      <% @posts.each do |post| %>
+        <div class="col-xs-12 col-sm-6">
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="media">
+
+                <div class="media-left">
+                  <div class="btn-group-vertical btn-group-sm">
+
+                        <%= form_for([post,  Vote.new]) do |p| %>
+                          <%= p.hidden_field :user_id, value: current_user.id if current_user %>
+                          <%= p.hidden_field :vote, value: 1 %>
+                          <%= button_tag(class: "btn btn-default btn-sm btn-top") do %>
+                            <i class="fa fa-chevron-up fa-lg"></i>
+                          <% end %>
+                        <% end %>
+
+
+                    <button type="button" name="button" class="btn btn-default">
+                      <%= post.score %>
+                    </button>
+
+
+                      <%= form_for([post,  Vote.new]) do |p| %>
+                        <%= p.hidden_field :user_id, value: current_user.id if current_user %>
+                        <%= p.hidden_field :vote, value: -1 %>
+                        <%= button_tag(class: "btn btn-default btn-sm btn-bot") do %>
+                          <i class="fa fa-chevron-down fa-lg"></i>
+                        <% end %>
+                      <% end %>
+                  </div>
+                </div>
+
+                <div class="media-body">
+
+                  <img src="<%= post.img_url %>" width="70px" height="70px" alt="" class="media-object pull-right">
+                  <%= link_to(post_path(post)) do %>
+                  <h2 class="media-heading">
+                    <%= post.title %>
+                  </h2>
+                  <% end %>
+                  <%= truncate(post.body, length: 100, omission: '... (click to see more)') %>
+                  <br/>
+                  <small>Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
+                  <hr>
+                  <div class="pull-left">
+                    <%= link_to "View Link", post.link, class: "btn btn-default btn-xs" %>
+                  </div>
+
+                  <div class="pull-right">
+                    <% if logged_in? && post.user_id == current_user.id %>
+                      <div class="btn-group">
+                        <%= link_to(edit_post_path(post), class: "btn btn-primary btn-xs") do %>
+                          Edit <i class="fa fa-pencil"></i>
+                        <% end %>
+                        <%= link_to(post_path(post), method: :delete,
+                        data: { confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" ) do %>
+                          Delete <i class="fa fa-trash-o"></i>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+
+
+  </div>
+</div>

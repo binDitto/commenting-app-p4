@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
-  resources :users
+
+  resources :users do
+    resources :posts,
+    only: [:index, :new, :create]
+  end
+
+  resources :posts, only: [:show, :edit, :update, :destroy] do
+    resources :votes, only: [:create]
+  end
+  get 'posts', to: 'posts#all'
+
+
   root 'welcome#index'
 
   get 'login', to: 'sessions#login'
