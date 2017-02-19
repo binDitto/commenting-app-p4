@@ -10,3 +10,12 @@ $(document).on 'click', '.thefa', (e) ->
   e.preventDefault()
   $('.above').fadeOut(1000)
   e.stopPropagation()
+
+$(document).on 'click', '.fa-ellipsis-v', (e) ->
+  e.preventDefault()
+  $('.toggle').fadeToggle(1000)
+  $('.toggle').not($(this).parent().find('.toggle')).fadeOut(1000)
+  e.stopPropagation()
+
+$(document).click ->
+  $('.toggle').fadeOut(1000)

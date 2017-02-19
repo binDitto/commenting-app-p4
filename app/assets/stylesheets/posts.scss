@@ -26,19 +26,48 @@
   position: absolute;
   height: 100%;
   width: 100%;
-
+  overflow: hidden;
 }
 
+// These will center the div within the middle of screen
 .container-table {
+
+  overflow: hidden;
    height: 100%;
    width: 100%;
    display: table;
 }
 .vertical-center-row {
+  overflow:hidden;
    display: table-cell;
    vertical-align: middle;
 }
 
+// end centering
+
 .thefa {
   margin: 20px;
+}
+
+// btn toggling show/hide
+.btn-group.toggle {
+  display: none;
+  position: absolute;
+  border: 1px solid #eaeaea;
+  width: 150px;
+  padding: 10px;
+  right: 50px;
+  bottom: 28px;
+  background: #eaeaea;
+  border-radius: 5px;
+}
+
+//link styles
+.thread {
+  display:block;
+  border-left: 2px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  border-top: 1px solid #eaeaea;
+  border-right: 1px solid #eaeaea;
+  padding: 10px;
 }

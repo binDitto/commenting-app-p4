@@ -1,19 +1,143 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="media">
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+            <div class="media-left">
+              <div class="btn-group-vertical btn-group-sm">
+                    <!--  This form_for is passing in two things
+                     current post, and adding votes to this post
+                     post is identifying the post you want to add votes to
+                     post.votes.build is adding the votes to that post
+                     before I had Vote.new which is adding a new vote in general
+                     but since the first argument is for post, it understands the relation anyways. -->
+                    <%= form_for([@post,  @post.votes.build ]) do |p| %>
+                      <%= p.hidden_field :user_id, value: current_user.id if current_user %>
+                      <%= p.hidden_field :vote, value: 1 %>
+                      <%= button_tag(class: "btn btn-default btn-sm btn-top") do %>
+                        <i class="fa fa-chevron-up fa-lg"></i>
+                      <% end %>
+                    <% end %>
+                    <!-- end upvote form -->
 
-<p>
-  <strong>Body:</strong>
-  <%= @post.body %>
-</p>
+                <button type="button" name="button" class="btn btn-default btn-sm">
+                  <%= @post.score %>
+                </button>
 
-<p>
-  <strong>User:</strong>
-  <%= @post.user %>
-</p>
+                  <!-- form for downvote -->
+                  <%= form_for([@post,  @post.votes.build]) do |p| %>
+                    <%= p.hidden_field :user_id, value: current_user.id if current_user %>
+                    <!-- This hidden_field adds a -1 vote -->
+                    <%= p.hidden_field :vote, value: -1 %>
+                    <%= button_tag(class: "btn btn-default btn-sm btn-bot") do %>
+                      <i class="fa fa-chevron-down fa-lg"></i>
+                    <% end %>
+                  <% end %>
+                  <!-- end downvote form -->
+              </div>
+            </div>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+            <div class="media-body">
+              <!-- image thumbnail for post -->
+              <img src="<%= @post.img_url %>" width="70px" height="70px" alt="" class="media-object pull-right">
+
+              <h2 class="media-heading">
+                <%= @post.title %>
+              </h2>
+
+              <!-- header body text & truncated -->
+              <%= @post.body %>
+              <br/>
+              <!-- time made info -->
+              <small>Posted <%= time_ago_in_words(@post.created_at) %> ago.</small>
+              <hr>
+              <!-- view link button to open link associated with post -->
+              <div class="pull-left">
+                <%= link_to "All Posts", posts_path, class: "btn btn-default btn-xs" %>
+                <%= link_to "View Link", @post.link, class: "btn btn-default btn-xs" %>
+              </div>
+
+              <!-- edit buttons -->
+              <div class="pull-right">
+
+                <% if logged_in? && @post.user_id == current_user.id %>
+                <i class="fa fa-ellipsis-v fa-lg"></i>
+                  <div class="btn-group toggle">
+                    <%= link_to(edit_post_path(@post), class: "btn btn-primary btn-xs") do %>
+                      Edit <i class="fa fa-pencil"></i>
+                    <% end %>
+                    <%= link_to(post_path(@post), method: :delete,
+                    data: { confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" ) do %>
+                      Delete <i class="fa fa-trash-o"></i>
+                    <% end %>
+                  </div>
+
+                <% end %>
+
+              </div>
+
+            </div>
+            <!-- end media body -->
+            </div>
+            <!-- end media -->
+          </div>
+          <!-- end panel body -->
+          <div class="panel-footer">
+            <!-- show all post comments -->
+            <% if @post.comments.any? %>
+              <ul class="list-group">
+                <% @post.comments.each do |comment| %>
+                  <li class="thread">
+                    <div class="media">
+                      <div class="media-left">
+
+                      </div>
+                      <div class="media-body">
+                        <div class="media-heading">
+                          <span class="label label-default"><%= comment.user.username %> said:</span>
+                        </div>
+
+                        <%= comment.body %>
+                        <br/>
+                        <small><%= time_ago_in_words(comment.created_at) %> ago</small>
+                        <hr>
+                        <% if comment.user == current_user %>
+                          <div class="btn-group pull-right">
+                            <%= link_to "Delete", post_comment_path(@post, comment), method: :delete,
+                                                  data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
+                          </div>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+              <hr>
+            <% end %>
+            <!-- end show post comments -->
+            <% if logged_in? %>
+              <!-- form to make comments on post -->
+              <%= form_for([@post, @post.comments.build], html: {class: "form-inline"}) do |c| %>
+
+                <div class="form-group">
+                  <%= c.hidden_field :user_id, value: current_user.id %>
+                  <%= c.text_field :body, class: "form-control", placeholder: "Enter a comment" %>
+                </div>
+
+                <div class="form-group">
+                  <%= c.submit "Post", class: "btn btn-success" %>
+                </div>
+              <% end %>
+              <!-- end form -->
+            <% else %>
+              <h3>Please log in to make a comment.</h3>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :posts, only: [:show, :edit, :update, :destroy] do
     resources :votes, only: [:create]
+    resources :comments
   end
   get 'posts', to: 'posts#all'
 
