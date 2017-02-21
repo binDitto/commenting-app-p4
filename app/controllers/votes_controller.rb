@@ -3,7 +3,7 @@ class VotesController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @vote = @post.votes.new(secure_params)
-    @vote.user_id = current_user.id if current_user
+    @vote.user = current_user
 
 # current_user.votes.where(post_id: @post, vote: 1).exists? || current_user.votes.where(post_id: @post, vote: -1 ).exists?
     if logged_in?
@@ -11,12 +11,12 @@ class VotesController < ApplicationController
         @existing_vote = Vote.find_by(post_id: @post.id)
         @existing_vote.destroy
         flash[:danger] = "You removed your vote for \"#{@post.title}\""
-        redirect_to posts_path
+        redirect_to :back
       else
         @vote.save
         flash[:success] = "Thanks #{current_user.username.capitalize} for casting your vote for \"#{@post.title}\""
         respond_to do |format|
-          format.html { redirect_to posts_path }
+          format.html { redirect_to :back}
           format.js
         end
       end
@@ -29,7 +29,7 @@ class VotesController < ApplicationController
 
   private
     def secure_params
-      params.require(:vote).permit(:user_id, :vote, :post_id)
+      params.require(:vote).permit(:vote)
     end
 
 end

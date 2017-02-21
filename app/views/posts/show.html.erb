@@ -7,19 +7,8 @@
 
             <div class="media-left">
               <div class="btn-group-vertical btn-group-sm">
-                    <!--  This form_for is passing in two things
-                     current post, and adding votes to this post
-                     post is identifying the post you want to add votes to
-                     post.votes.build is adding the votes to that post
-                     before I had Vote.new which is adding a new vote in general
-                     but since the first argument is for post, it understands the relation anyways. -->
-                    <%= form_for([@post,  @post.votes.build ]) do |p| %>
-                      <%= p.hidden_field :user_id, value: current_user.id if current_user %>
-                      <%= p.hidden_field :vote, value: 1 %>
-                      <%= button_tag(class: "btn btn-default btn-sm btn-top") do %>
-                        <i class="fa fa-chevron-up fa-lg"></i>
-                      <% end %>
-                    <% end %>
+
+                  <%= render partial: "posts/upvote", locals: { upvote: @post } %>
                     <!-- end upvote form -->
 
                 <button type="button" name="button" class="btn btn-default btn-sm">
@@ -27,14 +16,7 @@
                 </button>
 
                   <!-- form for downvote -->
-                  <%= form_for([@post,  @post.votes.build]) do |p| %>
-                    <%= p.hidden_field :user_id, value: current_user.id if current_user %>
-                    <!-- This hidden_field adds a -1 vote -->
-                    <%= p.hidden_field :vote, value: -1 %>
-                    <%= button_tag(class: "btn btn-default btn-sm btn-bot") do %>
-                      <i class="fa fa-chevron-down fa-lg"></i>
-                    <% end %>
-                  <% end %>
+                  <%= render partial: "posts/downvote", locals: { downvote: @post } %>
                   <!-- end downvote form -->
               </div>
             </div>
@@ -87,51 +69,12 @@
           <div class="panel-footer">
             <!-- show all post comments -->
             <% if @post.comments.any? %>
-              <ul class="list-group">
-                <% @post.comments.each do |comment| %>
-                  <li class="thread">
-                    <div class="media">
-                      <div class="media-left">
-
-                      </div>
-                      <div class="media-body">
-                        <div class="media-heading">
-                          <span class="label label-default"><%= comment.user.username %> said:</span>
-                        </div>
-
-                        <%= comment.body %>
-                        <br/>
-                        <small><%= time_ago_in_words(comment.created_at) %> ago</small>
-                        <hr>
-                        <% if comment.user == current_user %>
-                          <div class="btn-group pull-right">
-                            <%= link_to "Delete", post_comment_path(@post, comment), method: :delete,
-                                                  data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
-                          </div>
-                        <% end %>
-                      </div>
-
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
+              <%= render partial: "comments/comments", locals: { commentable: @post } %>
               <hr>
             <% end %>
             <!-- end show post comments -->
             <% if logged_in? %>
-              <!-- form to make comments on post -->
-              <%= form_for([@post, @post.comments.build], html: {class: "form-inline"}) do |c| %>
-
-                <div class="form-group">
-                  <%= c.hidden_field :user_id, value: current_user.id %>
-                  <%= c.text_field :body, class: "form-control", placeholder: "Enter a comment" %>
-                </div>
-
-                <div class="form-group">
-                  <%= c.submit "Post", class: "btn btn-success" %>
-                </div>
-              <% end %>
-              <!-- end form -->
+              <%= render partial: "comments/form", locals: { commentable: @post } %>
             <% else %>
               <h3>Please log in to make a comment.</h3>
             <% end %>

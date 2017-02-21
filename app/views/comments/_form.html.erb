@@ -1,32 +1,23 @@
-<%= form_for(comment) do |f| %>
-  <% if comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+<!-- form to make comments on post -->
+<%= form_for([commentable, Comment.new], html: {class: "form-inline"}) do |c| %>
+  <% if Comment.new.errors.any? %>
+    <div class="well well-danger">
+      <h2><%= pluralize(Comment.new.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
-      <% comment.errors.full_messages.each do |message| %>
+      <% Comment.new.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :body %>
-    <%= f.text_area :body %>
+  <div class="form-group">
+    <%= c.text_field :body, class: "form-control", placeholder: "Enter a comment" %>
   </div>
 
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :post_id %>
-    <%= f.text_field :post_id %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= c.submit "Post", class: "btn btn-success" %>
   </div>
 <% end %>
+<!-- end form -->

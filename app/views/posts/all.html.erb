@@ -19,35 +19,14 @@
                 <!-- this is the form style for the upvote downvote buttons a -->
                 <div class="media-left">
                   <div class="btn-group-vertical btn-group-sm">
-                        <!--  This form_for is passing in two things
-                         current post, and adding votes to this post
-                         post is identifying the post you want to add votes to
-                         post.votes.build is adding the votes to that post
-                         before I had Vote.new which is adding a new vote in general
-                         but since the first argument is for post, it understands the relation anyways. -->
-                        <%= form_for([post,  post.votes.build ]) do |p| %>
-                          <%= p.hidden_field :user_id, value: current_user.id if current_user %>
-                          <%= p.hidden_field :vote, value: 1 %>
-                          <%= button_tag(class: "btn btn-default btn-sm btn-top") do %>
-                            <i class="fa fa-chevron-up fa-lg"></i>
-                          <% end %>
-                        <% end %>
-                        <!-- end upvote form -->
+                        <%= render partial: "posts/upvote", locals: { upvote: post } %>
 
                     <button type="button" name="button" class="btn btn-default">
                       <%= post.score %>
                     </button>
 
-                      <!-- form for downvote -->
-                      <%= form_for([post,  post.votes.build]) do |p| %>
-                        <%= p.hidden_field :user_id, value: current_user.id if current_user %>
-                        <!-- This hidden_field adds a -1 vote -->
-                        <%= p.hidden_field :vote, value: -1 %>
-                        <%= button_tag(class: "btn btn-default btn-sm btn-bot") do %>
-                          <i class="fa fa-chevron-down fa-lg"></i>
-                        <% end %>
-                      <% end %>
-                      <!-- end downvote form -->
+                        <%= render partial: "posts/downvote", locals: { downvote: post} %>
+
                   </div>
                 </div>
                 <!-- end the voting buttons -->

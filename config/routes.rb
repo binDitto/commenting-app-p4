@@ -7,10 +7,14 @@ Rails.application.routes.draw do
 
   resources :posts, only: [:show, :edit, :update, :destroy] do
     resources :votes, only: [:create]
-    resources :comments
+    resources :comments, module: :posts
   end
-  get 'posts', to: 'posts#all'
 
+  resources :comments do
+    resources :comments, module: :comments
+  end
+
+  get 'posts', to: 'posts#all'
 
   root 'welcome#index'
 

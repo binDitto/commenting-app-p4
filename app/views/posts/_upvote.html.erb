@@ -1,0 +1,13 @@
+<!--  This form_for is passing in two things
+ current post, and adding votes to this post
+ post is identifying the post you want to add votes to
+ post.votes.build is adding the votes to that post
+ before I had Vote.new which is adding a new vote in general
+ but since the first argument is for post, it understands the relation anyways. -->
+<%= form_for([upvote,  Vote.new ]) do |p| %>
+  <%= p.hidden_field :vote, value: 1 %>
+  <%= button_tag(class: "btn btn-default btn-sm btn-top") do %>
+    <i class="fa fa-chevron-up fa-lg"></i>
+  <% end %>
+<% end %>
+<!-- end upvote form -->

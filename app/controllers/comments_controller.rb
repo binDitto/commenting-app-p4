@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
   # GET /comments/1
   # GET /comments/1.json
   def show
+    redirect_to posts_path
   end
 
   # GET /comments/new
@@ -24,18 +25,22 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.new(comment_params)
+    @comment = @commentable.comments.new(comment_params)
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @post, notice: 'Comment was successfully created.' }
+        format.html {
+          redirect_to :back, notice: 'Comment was successfully created.'
+        }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
+        format.html { render @post}
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
+
+
   end
 
   # PATCH/PUT /comments/1
@@ -57,7 +62,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +75,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:body, :user_id, :post_id)
+      params.require(:comment).permit(:body)
     end
 end

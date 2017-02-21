@@ -1,0 +1,9 @@
+<!-- form for downvote -->
+<%= form_for([downvote,  Vote.new]) do |p| %>
+  <!-- This hidden_field adds a -1 vote -->
+  <%= p.hidden_field :vote, value: -1 %>
+  <%= button_tag(class: "btn btn-default btn-sm btn-bot") do %>
+    <i class="fa fa-chevron-down fa-lg"></i>
+  <% end %>
+<% end %>
+<!-- end downvote form -->
