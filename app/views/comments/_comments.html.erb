@@ -1,79 +1,63 @@
-<ul class="list-group">
-  <% commentable.comments.each do |comment| %>
 
-    <li class="thread">
+    <li class="list-group-item thread">
       <div class="media">
 
         <div class="media-body">
+          <div class="pull-right">
 
+
+
+                        <% if comments.user == current_user %>
+                          <div class="btn-group pull-right">
+                            <%= link_to "Delete", comment_comment_path(comments, comments), method: :delete,
+                                                  data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
+
+                            
+                          </div>
+                        <% end %>
+          </div>
           <div class="media-heading">
-            <span class="label label-default">
-              <%= comment.user.username %> said:
-            </span>
+            <h4>
+              <%= link_to user_path(comments.user) do %>
+                <span class="label label-<%= logged_in? && (comments.user_id == current_user.id) ? "primary" : "default" %>">
+                  <%= comments.user.username %>
+                </span>
+              <% end %>
+            <small>
+              &nbsp; <%= time_ago_in_words(comments.created_at).capitalize %> ago
+            </small>
+            </h4>
+
           </div>
 
-          <%= comment.body %>
+          <%= comments.body %>
 
-          <br/>
 
-          <small>
-            <%= time_ago_in_words(comment.created_at) %> ago
-          </small>
-          <hr>
+          <div class="goo">
 
-          <% if logged_in? %>
-            <%= render partial: "comments/form", locals: { commentable: comment } %>
-          <% else %>
-            <h3>Please log in to make a comment.</h3>
-          <% end %>
-          
-          <% if comment.user == current_user %>
-            <div class="btn-group pull-right">
-              <%= link_to "Delete", post_comment_path(@post, comment), method: :delete,
-                                    data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
-            </div>
-          <% end %>
+            <% if logged_in? %>
+
+              <span class="toggle-reply">Reply</span>
+              <div class="reply-toggle">
+                <span class="label label-<%= logged_in? && (comments.user_id == current_user.id) ? "primary" : "default" %>">
+                  <%= current_user.username %>
+                </span><%= render partial: "comments/form", locals: { commentable: comments } %>
+              </div>
+            <br/>
+            <% else %>
+              <h3>Please log in to make a comment.</h3>
+
+            <% end %>
+
+          </div>
+
         </div>
 
       </div>
-
+      <% if comments.comments.any? %>
       <ul class="list-group">
-        <% comment.comments.each do |reply| %>
-          <li class="thread">
-            <div class="media">
-
-              <div class="media-body">
-
-                <div class="media-heading">
-                  <span class="label label-default">
-                    <%= reply.user.username %> said:
-                  </span>
-                </div>
-
-                <%= reply.body %>
-
-                <br/>
-
-                <small>
-                  <%= time_ago_in_words(reply.created_at) %> ago
-                </small>
-                <hr>
-                <% if reply.user == current_user %>
-                  <div class="btn-group pull-right">
-                    <%= link_to "Delete", comment_comment_path(comment, reply), method: :delete,
-                                          data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-xs" %>
-                  </div>
-                <% end %>
-              </div>
-
-            </div>
-          </li>
-        <% end %>
+        <%= render partial: "comments/comments", collection: comments.comments %>
       </ul>
+      <% end %>
 
     </li>
-
-
-
-  <% end %>
-</ul>

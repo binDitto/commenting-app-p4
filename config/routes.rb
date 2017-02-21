@@ -3,15 +3,16 @@ Rails.application.routes.draw do
   resources :users do
     resources :posts,
     only: [:index, :new, :create]
+    resources :comments, only: [ :index, :destroy ]
   end
 
   resources :posts, only: [:show, :edit, :update, :destroy] do
     resources :votes, only: [:create]
-    resources :comments, module: :posts
+    resources :comments, only: [:create, :destroy ], module: :posts
   end
 
-  resources :comments do
-    resources :comments, module: :comments
+  resources :comments, only: [ :create, :destroy ] do
+    resources :comments, only: [:create, :destroy ], module: :comments
   end
 
   get 'posts', to: 'posts#all'

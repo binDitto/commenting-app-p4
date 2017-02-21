@@ -8,12 +8,17 @@ class PostsController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @posts = @user.posts.all
+
+    if @posts.count == 0
+      redirect_to user_path(@user)
+      flash[:danger] = "No posts available to see."
+    end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
-
+    @comments = @post.comments.order("comments.created_at DESC")
   end
 
   # GET /posts/new

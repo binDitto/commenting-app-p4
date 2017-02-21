@@ -52,12 +52,12 @@
 // btn toggling show/hide
 .btn-group.toggle {
   display: none;
-  position: absolute;
+  position: relative;
   border: 1px solid #eaeaea;
   width: 150px;
+  height: auto;
   padding: 10px;
-  right: 50px;
-  bottom: 28px;
+  margin-right: 10px;
   background: #eaeaea;
   border-radius: 5px;
 }
@@ -69,5 +69,54 @@
   border-bottom: 1px solid #eaeaea;
   border-top: 1px solid #eaeaea;
   border-right: 1px solid #eaeaea;
+
+}
+
+.toggle-reply {
+
+}
+.toggle-reply:hover {
+  color: #eaeaea;
+  cursor: pointer;
+
+}
+
+.reply-toggle {
+  display:none;
+  border: 1px solid #eaeaea;
+  width: 100%;
   padding: 10px;
+}
+
+.panel-footer .form-inline {
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 10px;
+  padding: 0px 0px 10px 0px;
+  .form-group {
+    padding: 5px;
+    width: 100%;
+    .form-control {
+      width: 100%;
+    }
+    .btn {
+    }
+  }
+}
+.reply-toggle .form-inline {
+  border-bottom: 0px;
+  padding: 5px;
+  .form-group {
+    width: 100%;
+    .form-control {
+      width: 100%;
+    }
+    .btn {
+    }
+  }
+}
+
+.goo {
+  padding: 10px 0px 10px 0px;
+  margin: 20px 0px 0px 0px;
+  border-top: 1px solid #eaeaea;
 }

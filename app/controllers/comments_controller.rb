@@ -4,7 +4,13 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @user = User.find(params[:user_id])
+    @comments = @user.comments.order("created_at desc")
+
+    if @comments.count == 0
+      redirect_to user_path(@user)
+      flash[:danger] = "No comments available to see."
+    end
   end
 
   # GET /comments/1

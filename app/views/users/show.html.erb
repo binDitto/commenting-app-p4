@@ -19,13 +19,18 @@
             <li class="list-group-item">
               Email: <%= @user.email %>
             </li>
-            <li class="list-group-item">
-              Posts:
-              <span class="badge badge-success"><%= @user.posts.count %></span>
-            </li>
+
+              <li class="list-group-item">
+                Posts:
+                <%= link_to user_posts_path(@user) do %>
+                  <span class="badge badge-success"><%= @user.posts.count %></span>
+                <% end %>
+              </li>
             <li class="list-group-item">
               Comments:
-              <span class="badge badge-success">9</span>
+              <%= link_to user_comments_path(@user) do %>
+                <span class="badge badge-success"><%= @user.comments.count %></span>
+              <% end %>
             </li>
           </ul>
         </div>

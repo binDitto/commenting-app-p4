@@ -36,6 +36,7 @@
               <small>Posted <%= time_ago_in_words(@post.created_at) %> ago.</small>
               <hr>
               <!-- view link button to open link associated with post -->
+
               <div class="pull-left">
                 <%= link_to "All Posts", posts_path, class: "btn btn-default btn-xs" %>
                 <%= link_to "View Link", @post.link, class: "btn btn-default btn-xs" %>
@@ -45,8 +46,8 @@
               <div class="pull-right">
 
                 <% if logged_in? && @post.user_id == current_user.id %>
-                <i class="fa fa-ellipsis-v fa-lg"></i>
-                  <div class="btn-group toggle">
+
+                  <div class="btn-group toggle pull-left">
                     <%= link_to(edit_post_path(@post), class: "btn btn-primary btn-xs") do %>
                       Edit <i class="fa fa-pencil"></i>
                     <% end %>
@@ -55,7 +56,7 @@
                       Delete <i class="fa fa-trash-o"></i>
                     <% end %>
                   </div>
-
+                  <i class="fa fa-ellipsis-v fa-lg pull-right"></i>
                 <% end %>
 
               </div>
@@ -66,18 +67,26 @@
             <!-- end media -->
           </div>
           <!-- end panel body -->
+
+
           <div class="panel-footer">
-            <!-- show all post comments -->
-            <% if @post.comments.any? %>
-              <%= render partial: "comments/comments", locals: { commentable: @post } %>
-              <hr>
-            <% end %>
-            <!-- end show post comments -->
             <% if logged_in? %>
+
               <%= render partial: "comments/form", locals: { commentable: @post } %>
+
             <% else %>
               <h3>Please log in to make a comment.</h3>
+
             <% end %>
+            <!-- show all post comments -->
+            <% if @post.comments.any? %>
+              <ul class="list-group">
+                <%= render partial: "comments/comments", collection: @comments %>
+              </ul>
+
+            <% end %>
+            <!-- end show post comments -->
+
           </div>
         </div>
       </div>

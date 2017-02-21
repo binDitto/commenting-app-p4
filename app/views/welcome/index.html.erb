@@ -1,7 +1,54 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-      <h1>Welcome!</h1>
+      <h1>This post is on fire!</h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="media">
+
+            <!-- this is the form style for the upvote downvote buttons a -->
+            <div class="media-left">
+              <div class="btn-group-vertical btn-group-sm">
+
+                <button type="button" name="button" class="btn btn-default">
+                  <%= @post.score %>
+                </button>
+
+                    
+
+              </div>
+            </div>
+            <!-- end the voting buttons -->
+            <!-- main media body -->
+            <div class="media-body">
+              <!-- image thumbnail for post -->
+              <img src="<%= @post.img_url %>" width="70px" height="70px" alt="" class="media-object pull-right">
+              <!-- link to show page for post -->
+              <%= link_to(post_path(@post)) do %>
+              <h2 class="media-heading">
+                <%= @post.title %>
+              </h2>
+              <% end %>
+              <!-- end show page link -->
+
+              <!-- header body text & truncated -->
+              <%= truncate(@post.body, length: 100, omission: '... (click to see more)') %>
+              <br/>
+              <!-- time made info -->
+              <small>Posted <%= time_ago_in_words(@post.created_at) %> ago.</small>
+              <hr>
+              <!-- view link button to open link associated with post -->
+              <div class="pull-left">
+                <%= link_to "View Link", @post.link, class: "btn btn-default btn-xs" %>
+              </div>
+
+              <!-- edit buttons -->
+            </div>
+            <!-- end media body -->
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>
