@@ -51,6 +51,15 @@
                 <%= p.text_area :body, rows: "5", class: "form-control", placeholder: "Enter description" %>
               </div>
             </div>
+            <!-- select boxes for categories -->
+            <div class="form-group">
+              <div class="col-xs-12 col-sm-10 ">
+                <%= p.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
+                  <% cb.label(class: "checkbox-inline col-xs-12 col-sm-2 control-label") {cb.check_box(class: "checkbox col-xs-12 col-sm-10") + cb.text } %>
+                <% end %>
+              </div>
+            </div>
+            <!-- end select boxes for categories -->
           </div>
 
           <div class="panel-footer">

@@ -19,7 +19,15 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @category = Category.find(params[:id])
+  end
 
+  def destroy
+    @category = Category.find(params[:id])
+    @category.destroy
+
+    flash[:danger] = "Category removed!"
+    redirect_to :back
   end
 
   private

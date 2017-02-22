@@ -2,86 +2,13 @@
 
 <div class="container">
   <div class="row">
+    <div class="" align="center">
+      <a href="#" class="btn btn-success btn-lg above-toggle">Add Post  <i class="fa fa-plus"></i></a>
 
-    <a href="#" class="btn btn-success btn-lg above-toggle">Add Post  <i class="fa fa-plus"></i></a>
-
-
+    </div>
 
     <hr>
-
-      <% @posts.each do |post| %>
-        <div class="col-xs-12 col-sm-6">
-
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="media">
-
-                <!-- this is the form style for the upvote downvote buttons a -->
-                <div class="media-left">
-                  <div class="btn-group-vertical btn-group-sm">
-                        <%= render partial: "posts/upvote", locals: { upvote: post } %>
-
-                    <button type="button" name="button" class="btn btn-default">
-                      <%= post.score %>
-                    </button>
-
-                        <%= render partial: "posts/downvote", locals: { downvote: post} %>
-
-                  </div>
-                </div>
-                <!-- end the voting buttons -->
-                <!-- main media body -->
-                <div class="media-body">
-                  <!-- image thumbnail for post -->
-                  <img src="<%= post.img_url %>" width="70px" height="70px" alt="" class="media-object pull-right">
-                  <!-- link to show page for post -->
-                  <%= link_to(post_path(post)) do %>
-                  <h2 class="media-heading">
-                    <%= post.title %>
-                  </h2>
-                  <% end %>
-                  <!-- end show page link -->
-
-                  <!-- header body text & truncated -->
-                  <%= truncate(post.body, length: 100, omission: '... (click to see more)') %>
-                  <br/>
-                  <!-- time made info -->
-                  <small>Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
-                  <hr>
-                  <!-- view link button to open link associated with post -->
-                  <div class="pull-left">
-                    <%= link_to "View Link", post.link, class: "btn btn-default btn-xs" %>
-                  </div>
-
-                  <!-- edit buttons -->
-                  <div class="pull-right">
-
-                    <% if logged_in? && post.user_id == current_user.id %>
-
-                      <div class="btn-group toggle pull-left">
-                        <%= link_to(edit_post_path(post), class: "btn btn-primary btn-xs") do %>
-                          Edit <i class="fa fa-pencil"></i>
-                        <% end %>
-                        <%= link_to(post_path(post), method: :delete,
-                        data: { confirm: "Are you sure?"}, class: "btn btn-danger btn-xs" ) do %>
-                          Delete <i class="fa fa-trash-o"></i>
-                        <% end %>
-                      </div>
-                      <i class="fa fa-ellipsis-v fa-lg pull-right"></i>
-                    <% end %>
-
-                  </div>
-                </div>
-                <!-- end media body -->
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-      <% end %>
-
-
+      <%= render partial: "posts/posts", collection: @posts %>
 
   </div>
 </div>

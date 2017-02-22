@@ -17,24 +17,34 @@
         <li><%= link_to "Users", users_path %></li>
         <li><%= link_to "Posts", posts_path %></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><%= link_to 'All', categories_path %></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <% Category.all.each do |category| %>
+              <% if category.posts.any? %>
+                <li><%= link_to category.name, category_path(category) %></li>
+              <% end %>
+            <% end %>
             <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><%= link_to 'Create Category', new_category_path %></li>
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+
+      <!-- implement searching mech for categories -->
+      <!-- <% if (params[:action] == "all" && params[:controller] == "posts") && (Post.count > 1) %>
+
+        <%= form_tag(posts_path, method: :get,  class: "navbar-form navbar-left" ) do %>
+          <div class="form-group">
+            <%=text_field_tag :search, params[:search], class: "form-control", placeholder: "Search Categories" %>
+          </div>
+
+            <%= submit_tag "Search", class: "btn btn-default" %>
+        <% end %>
+      <% end %> -->
+      <!-- end search implementation -->
+
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
 
@@ -53,7 +63,7 @@
                   <li><%= link_to 'Comments', user_comments_path(current_user) %></li>
 
                   <li role="separator" class="divider"></li>
-                  <li><%= link_to 'Logout', logout_path, method: :delete, class: "btn btn-danger navbar-btn" %></li>
+                  <li><%= link_to 'Logout', logout_path, method: :delete, class: "btn btn-danger" %></li>
                 </ul>
               </li>
 

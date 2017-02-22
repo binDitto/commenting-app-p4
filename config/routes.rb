@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :categories, except: [ :destroy ]
+  resources :categories
 
   resources :users do
     resources :posts,

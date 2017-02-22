@@ -1,29 +1,41 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <%= form_for(@category) do |f| %>
-        <% if @category.errors.any? %>
-          <div class="well well-danger">
-            <h2><%= pluralize(@category.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <div class="panel panel-default">
+        <%= form_for(@category) do |f| %>
+        <div class="panel-heading">
+          <h2 align="center">Add new category</h2>
+        </div>
+        <div class="panel-body">
+          <% if @category.errors.any? %>
+            <div class="well well-danger">
+              <h2><%= pluralize(@category.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-            <ul>
-            <% @category.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
+              <ul>
+              <% @category.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+          
+            <%= f.text_field :name, class: "form-control", placeholder: "Category name" %>
           </div>
+
+        </div>
+        <div class="panel-footer">
+          <%= f.submit class: "btn btn-primary" %>
+        </div>
         <% end %>
 
-        <div class="form-group">
-          <%= f.label :name %>
-          <%= f.text_field :name, class: "form-control", placeholder: "Category name" %>
-        </div>
+      </div>
 
 
 
-          <%= f.submit class: "btn btn-primary" %>
 
-      <% end %>
+
 
     </div>
   </div>

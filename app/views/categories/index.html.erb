@@ -1,9 +1,32 @@
-<h1>Listing All Categories</h1>
-<ul>
-<% @categories.each do |category| %>
-  <li>
-    <%= link_to "#{category.name}", category_path(category) %>
-  </li>
 
-<% end %>
-</ul>
+<div class="container">
+  <div class="row">
+    <h2 align="center">All Categories</h2>
+    <hr>
+    <ul class="list-group">
+      <div class="col-xs-12 col-sm-3">
+        <% @categories.each do |category| %>
+          <li class="list-group-item" align="center">
+            <div class="media-body">
+                <%= link_to category_path(category) do %>
+                  <h3><%= category.name %></h3>
+                <% end %>
+
+                <% if logged_in? %>
+                  <%= link_to "Delete", category_path(category), method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-danger btn-sm" %>
+                <% end %>
+            </div>
+
+            <div class="media-right">
+              <h3><%= category.posts.count %></h3>
+              <hr>
+              <h6>Posts</h6>
+            </div>
+
+          </li>
+
+        <% end %>
+      </div>
+    </ul>
+  </div>
+</div>

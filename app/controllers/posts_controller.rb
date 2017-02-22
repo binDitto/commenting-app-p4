@@ -1,7 +1,14 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   def all
+
     @posts = Post.all.order("created_at ASC").sort_by(&:score).reverse
+
+    # if params[:search]
+    #   @posts = Post.search(params[:search]).order("created_at ASC")
+    # else
+    #   @posts = Post.all.order("created_at ASC").sort_by(&:score).reverse
+    # end
   end
   # GET /users/:user_id/posts
   # GET /users/:user_id/posts.json
@@ -80,6 +87,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :body, :user_id, :link, :img_url)
+      params.require(:post).permit(:title, :body, :user_id, :link, :img_url, category_ids: [])
     end
 end

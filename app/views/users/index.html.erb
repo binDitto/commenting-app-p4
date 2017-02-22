@@ -2,12 +2,27 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
       <div class="col-xs-12">
-        <h1>Users</h1>
+        <h1 align="center">Users</h1>
         <hr>
         <% @users.each do |user| %>
           <div class="list-group col-xs-12 col-sm-6">
-            <%= link_to(user_path(user), class: "list-group-item list-group-item-info") do %>
-              <%= user.username %> <small><%= user.email %></small>
+            <%= link_to(user_path(user), class: "list-group-item") do %>
+              <div class="media-body">
+                <h3><%= user.username %></h3>
+                <small><%= user.email %></small>
+              </div>
+
+
+              <div class="media-right" align="center">
+                <h3 align="center"><%= user.comments.count %></h3>
+                <hr>
+                <h6 align="center">Comments</h6>
+              </div>
+              <div class="media-right" align="center">
+                <h3 align="center"><%= user.posts.count %></h3>
+                <hr>
+                <h6 align="center">Posts</h6>
+              </div>
             <% end %>
           </div>
         <% end %>
