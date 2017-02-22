@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :categories, except: [ :destroy ]
+
   resources :users do
     resources :posts,
     only: [:index, :new, :create]
